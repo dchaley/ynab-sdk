@@ -15,7 +15,6 @@ package ynab.client.api;
 
 import com.squareup.okhttp.Call;
 import org.junit.Before;
-import org.mockito.Matchers;
 import ynab.client.invoker.ApiClient;
 import ynab.client.invoker.ApiException;
 import java.math.BigDecimal;
@@ -26,13 +25,12 @@ import ynab.client.model.*;
 import java.util.*;
 
 import org.junit.Test;
-import org.junit.Ignore;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -84,7 +82,7 @@ public class BudgetsApiTest {
     public void getBudgetByIdTest() throws ApiException {
         BigDecimal lastKnowledgeOfServer = null;
         ApiResponse<BudgetDetailResponse> budgetDetailResponseApiResponse = new ApiResponse<BudgetDetailResponse>(200, null, budgetDetailResponse);
-        doReturn(budgetDetailResponseApiResponse).when(mockApiClient).execute(any(Call.class), Matchers.<Class<BudgetDetailResponse>>any());
+        doReturn(budgetDetailResponseApiResponse).when(mockApiClient).execute(any(Call.class), any());
         BudgetDetailResponse response = budgetsApi.getBudgetById(budgetId, lastKnowledgeOfServer);
         assertEquals(response.getData().getBudget().getId(), "someId");
     }
@@ -101,7 +99,7 @@ public class BudgetsApiTest {
     public void getBudgetsTest() throws ApiException {
         BigDecimal lastKnowledgeOfServer = null;
         ApiResponse<BudgetSummaryResponse> budgetDetailResponseApiResponse = new ApiResponse<>(200, null, budgetSummaryResponse);
-        doReturn(budgetDetailResponseApiResponse).when(mockApiClient).execute(any(Call.class), Matchers.<Class<BudgetDetailResponse>>any());
+        doReturn(budgetDetailResponseApiResponse).when(mockApiClient).execute(any(Call.class), any());
         BudgetSummaryResponse response = budgetsApi.getBudgets();
         assertEquals(response.getData().getBudgets().get(0).getId(), "someId");
     }

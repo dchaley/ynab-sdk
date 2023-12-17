@@ -15,7 +15,6 @@ package ynab.client.api;
 
 import com.squareup.okhttp.Call;
 import org.junit.Before;
-import org.mockito.Matchers;
 import ynab.client.invoker.ApiClient;
 import ynab.client.invoker.ApiException;
 import ynab.client.model.*;
@@ -27,7 +26,6 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import ynab.client.invoker.ApiResponse;
@@ -78,7 +76,7 @@ public class AccountsApiTest {
     @Test
     public void getAccountByIdTest() throws ApiException {
         ApiResponse<AccountResponse> mockResponse = new ApiResponse<AccountResponse>(200, null, accountResponse);
-        doReturn(mockResponse).when(mockApiClient).execute(any(Call.class), Matchers.<Class<AccountResponse>>any());
+        doReturn(mockResponse).when(mockApiClient).execute(any(Call.class), any());
         AccountResponse response = accountsApi.getAccountById(budgetId, accountId);
         assertEquals(response.getData().getAccount().getId(), "someId");
         assertEquals(response.getData().getAccount().getName(), "someName");
@@ -95,7 +93,7 @@ public class AccountsApiTest {
     @Test
     public void getAccountsTest() throws ApiException {
         ApiResponse<AccountsResponse> mockResponse = new ApiResponse<AccountsResponse>(200, null, accountsResponse);
-        doReturn(mockResponse).when(mockApiClient).execute(any(Call.class), Matchers.<Class<AccountsResponse>>any());
+        doReturn(mockResponse).when(mockApiClient).execute(any(Call.class), any());
         AccountsResponse response = accountsApi.getAccounts(budgetId);
         assertEquals(response.getData().getAccounts().get(0).getId(), "someId");
     }
