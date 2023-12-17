@@ -29,10 +29,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 /**
  * API tests for BudgetsApi
@@ -81,8 +78,8 @@ public class BudgetsApiTest {
     @Test
     public void getBudgetByIdTest() throws ApiException {
         BigDecimal lastKnowledgeOfServer = null;
-        ApiResponse<BudgetDetailResponse> budgetDetailResponseApiResponse = new ApiResponse<BudgetDetailResponse>(200, null, budgetDetailResponse);
-        doReturn(budgetDetailResponseApiResponse).when(mockApiClient).execute(any(Call.class), any());
+        ApiResponse<BudgetDetailResponse> budgetDetailResponseApiResponse = new ApiResponse<>(200, null, budgetDetailResponse);
+        when(mockApiClient.execute(any(), any())).thenReturn((ApiResponse) budgetDetailResponseApiResponse);
         BudgetDetailResponse response = budgetsApi.getBudgetById(budgetId, lastKnowledgeOfServer);
         assertEquals(response.getData().getBudget().getId(), "someId");
     }
@@ -99,7 +96,7 @@ public class BudgetsApiTest {
     public void getBudgetsTest() throws ApiException {
         BigDecimal lastKnowledgeOfServer = null;
         ApiResponse<BudgetSummaryResponse> budgetDetailResponseApiResponse = new ApiResponse<>(200, null, budgetSummaryResponse);
-        doReturn(budgetDetailResponseApiResponse).when(mockApiClient).execute(any(Call.class), any());
+        when(mockApiClient.execute(any(), any())).thenReturn((ApiResponse) budgetDetailResponseApiResponse);
         BudgetSummaryResponse response = budgetsApi.getBudgets();
         assertEquals(response.getData().getBudgets().get(0).getId(), "someId");
     }

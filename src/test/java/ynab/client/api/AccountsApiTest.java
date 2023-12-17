@@ -75,8 +75,8 @@ public class AccountsApiTest {
      */
     @Test
     public void getAccountByIdTest() throws ApiException {
-        ApiResponse<AccountResponse> mockResponse = new ApiResponse<AccountResponse>(200, null, accountResponse);
-        doReturn(mockResponse).when(mockApiClient).execute(any(Call.class), any());
+        ApiResponse<AccountResponse> mockResponse = new ApiResponse<>(200, null, accountResponse);
+        when(mockApiClient.execute(any(), any())).thenReturn((ApiResponse) mockResponse);
         AccountResponse response = accountsApi.getAccountById(budgetId, accountId);
         assertEquals(response.getData().getAccount().getId(), "someId");
         assertEquals(response.getData().getAccount().getName(), "someName");
@@ -92,8 +92,8 @@ public class AccountsApiTest {
      */
     @Test
     public void getAccountsTest() throws ApiException {
-        ApiResponse<AccountsResponse> mockResponse = new ApiResponse<AccountsResponse>(200, null, accountsResponse);
-        doReturn(mockResponse).when(mockApiClient).execute(any(Call.class), any());
+        ApiResponse<AccountsResponse> mockResponse = new ApiResponse<>(200, null, accountsResponse);
+        when(mockApiClient.execute(any(), any())).thenReturn((ApiResponse) mockResponse);
         AccountsResponse response = accountsApi.getAccounts(budgetId);
         assertEquals(response.getData().getAccounts().get(0).getId(), "someId");
     }
